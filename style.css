@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+:root {
+    --header-clr: #45FFCA;
+    --main-clr: #FEFFAC;
+    --button-hover-clr: #FF68A8;
+    --button-text-clr: #333;
+    --accent-clr: #e57a44;
+    --third-clr: #4E598C;
+    --fourth-clr: #422040;
+
+}
+
+body {
+    font-family: Raleway, sans-serif;
+    font-size: 20px;
+}
+
+header {
+    height: 15vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--header-clr)
+}
+
+.container {
+    border: 2px solid black;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--main-clr);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    gap: 50px
+}
+
+
+.library {
+    height: 100%;
+    width: 100%;
+    border: 2px solid black;
+}
+
+table {
+    width: 100%;
+}
+
+th,
+tr,
+td {
+    border: 2px solid black;
+    text-align: center;
+
+}
+
+dialog {
+    height: 500px;
+    width: 500px;
+    margin: 50px auto;
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+form div:nth-child(1) {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+button.closeDialog {
+    border: none;
+    background-color: transparent
+}
+
+label[required]::before {
+    content: "*";
+    color: red;
+}
+
+form div:last-child {
+    width: 100%;
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-evenly;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--main-clr);
+    color: var(--button-text-clr);
+    border: 2px solid var(--header-clr);
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--button-hover-clr);
+    border-color: var(--header-clr);
+    transform: scale(1.05);
+}
