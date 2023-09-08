@@ -1,11 +1,21 @@
 const myLibrary = [];
-const library = document.querySelector(".library");
 const addBookBtn = document.querySelector("#addBook");
 const books = document.querySelector(".books");
 const dialog = document.getElementById("dialog");
 const currentYear = new Date().getFullYear();
 const closeDialogBtn = document.querySelector(".closeDialog");
+const submitBtn = document.querySelector("#submit");
+const errorField = document.querySelector(".errorField");
+const deleteBtn = document.querySelector(".deleteBtn");
 document.getElementById("year").max = currentYear;
+
+//
+let titleInput = document.querySelector("#title");
+let authorInput = document.querySelector("#author");
+let yearInput = document.querySelector("#year");
+let pagesInput = document.querySelector("#pages");
+let statusInput = document.querySelector("#status");
+//
 closeDialogBtn.addEventListener("click", function () {
   dialog.close();
 });
@@ -49,37 +59,91 @@ const book4 = new Book(
   "Read"
 );
 function addBookToLibrary(obj) {
-  myLibrary.push(obj);
-}
-addBookToLibrary(book1);
-addBookToLibrary(book2);
-addBookToLibrary(book3);
-addBookToLibrary(book4);
-
-function displayBooks(arr) {
-  const table = document.getElementById("libTable");
-  for (let i = 0; i < arr.length; i++) {
-    let currentBook = arr[i];
-    let tr = table.insertRow();
-    let titleCell = tr.insertCell();
-    titleCell.textContent = currentBook.title;
-    let authorCell = tr.insertCell();
-    authorCell.textContent = currentBook.author;
-    let yearCell = tr.insertCell();
-    yearCell.textContent = currentBook.year;
-    let pagesCell = tr.insertCell();
-    pagesCell.textContent = currentBook.pages;
-    let statusCell = tr.insertCell();
-    statusCell.textContent = currentBook.status;
-    let modifyCell = tr.insertCell();
-    let deleteVar = document.createElement("button");
-    deleteVar.textContent = "Delete";
-    deleteVar.classList.add("deleteBtn", "btn");
-    let status = document.createElement("button");
-    status.textContent = currentBook.status;
-    status.classList.add("StatusBtn", "btn");
-    modifyCell.appendChild(deleteVar);
-    modifyCell.appendChild(status);
+  const bookCheck = myLibrary.some((book) => {
+    return book.title === obj.title;
+  });
+  if (bookCheck) {
+    errorField.textContent = "Book is already in the library";
+    return;
+  } else {
+    myLibrary.push(obj);
+    errorField.textContent = "Book Added!";
+    return;
   }
 }
-displayBooks(myLibrary);
+
+function displayLastBook(arr) {
+  const table = document.getElementById("libTable");
+  const lastBook = arr[arr.length - 1];
+  const lastBookIndex = [arr.length - 1];
+  // element.setAttribute('data-custom', 'yourValue');
+  let tr = table.insertRow();
+  tr.setAttribute("data-index", `${lastBookIndex}`);
+  let titleCell = tr.insertCell();
+  titleCell.textContent = lastBook.title;
+  let authorCell = tr.insertCell();
+  authorCell.textContent = lastBook.author;
+  let yearCell = tr.insertCell();
+  yearCell.textContent = lastBook.year;
+  let pagesCell = tr.insertCell();
+  pagesCell.textContent = lastBook.pages;
+  let statusCell = tr.insertCell();
+  statusCell.classList.add("bookStatus");
+  statusCell.textContent = lastBook.status;
+  let modifyCell = tr.insertCell();
+  let deleteVar = document.createElement("button");
+  deleteVar.textContent = "Delete";
+  deleteVar.classList.add("deleteBtn", "btn");
+  let status = document.createElement("button");
+  status.textContent = "Change Status";
+  status.classList.add("statusBtn", "btn");
+  modifyCell.appendChild(deleteVar);
+  modifyCell.appendChild(status);
+}
+
+submitBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  let book = new Book(
+    titleInput.value,
+    yearInput.value,
+    authorInput.value,
+    pagesInput.value,
+    statusInput.value
+  );
+
+  addBookToLibrary(book);
+  displayLastBook(myLibrary);
+  dialog.close();
+});
+
+document.addEventListener("click", deleteListener);
+
+function deleteListener(event) {
+  let element = event.target;
+  if (element.classList.contains("deleteBtn")) {
+    console.log("hi");
+    let closestRow = element.closest("[data-index]");
+    let rowIndex = closestRow.getAttribute("data-index");
+    myLibrary.splice(rowIndex, 1);
+    closestRow.remove();
+    console.log(closestRow);
+    console.log(rowIndex);
+  }
+}
+document.addEventListener("click", statusToggle);
+
+function statusToggle(event) {
+  let element = event.target;
+  if (element.classList.contains("statusBtn")) {
+    console.log("statusToggle clicked");
+    let closestRow = element.closest("[data-index]");
+    console.log(closestRow);
+    let statusChangeCell = closestRow.querySelector(".bookStatus"); // Find the status cell within the row
+    console.log(statusChangeCell);
+    if (statusChangeCell.textContent === "Not Read") {
+      statusChangeCell.textContent = "Read";
+    } else if (statusChangeCell.textContent === "Read") {
+      statusChangeCell.textContent = "Not Read";
+    }
+  }
+}
