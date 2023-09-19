@@ -17,15 +17,18 @@ let statusInput = document.querySelector("#status");
 // get current year for the add book check
 document.getElementById("year").max = currentYear;
 //
-// Functions :
-function Book(title, year, author, pages, status) {
-  this.title = title;
-  this.year = year;
-  this.author = author;
-  this.pages = pages;
-  this.status = status;
-}
 
+///// Book Class /////
+class Book {
+  constructor(title, year, author, pages, status) {
+    this.title = title;
+    this.year = year;
+    this.author = author;
+    this.pages = pages;
+    this.status = status;
+  }
+}
+// Functions :
 function addBookToLibrary(obj) {
   myLibrary.push(obj);
 }
