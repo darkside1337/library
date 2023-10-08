@@ -13,6 +13,7 @@ let authorInput = document.querySelector("#author");
 let yearInput = document.querySelector("#year");
 let pagesInput = document.querySelector("#pages");
 let statusInput = document.querySelector("#status");
+const bookAddForm = document.getElementById("bookAddForm");
 //
 // get current year for the add book check
 document.getElementById("year").max = currentYear;
@@ -108,7 +109,7 @@ function statusToggle(event) {
 ////// Event Listeners:
 document.addEventListener("click", statusToggle);
 document.addEventListener("click", deleteListener);
-submitBtn.addEventListener("click", function (e) {
+bookAddForm.addEventListener("submit", function (e) {
   submitBook(e);
 });
 closeDialogBtn.addEventListener("click", function () {
